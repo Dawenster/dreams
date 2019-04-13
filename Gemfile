@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'faker', '~> 1.8'
 gem 'jbuilder', '~> 2.5'
 gem 'pg'
 gem 'puma', '~> 3.11'
@@ -23,7 +24,7 @@ end
 group :test do
   gem 'database_cleaner', '~> 1.6.2'
   gem 'fabrication', '~> 2.19'
-  gem 'faker', '~> 1.8'
+  gem 'rails-controller-testing'
   gem 'rspec', '~> 3.7'
   gem 'rspec-rails', '~> 3.7'
 end
