@@ -4,4 +4,6 @@ Rails.application.routes.draw do
       get :random
     end
   end
+
+  resources :elements, only: [:index]
 end
