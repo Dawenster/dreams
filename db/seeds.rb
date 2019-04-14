@@ -6,20 +6,30 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-1000.times do
-  user = User.create!(email: Faker::Internet.email)
-  animal = Faker::Creature::Animal.name
-  color = Faker::Color.color_name
-  verb = Faker::Verb.simple_present
-  objective = ['towards', 'from', 'to', 'at', 'into', 'under', 'beside'].sample
-  word1, word2 = Faker::Hipster.words(2, false, true)
-
-  title = "#{color.capitalize} #{word1} #{animal} #{verb} #{objective} a #{word2}"
-
-  Dream.create(
-    user: user,
-    title: title
+20.times do
+  element = Element.create!(
+    name: Faker::Creature::Animal.name,
+    dimension: Faker::Lorem.words(2).join(' '),
+    commentary: Faker::Lorem.sentence
   )
 
-  puts "Created dream with title: #{title}"
+  50.times do
+    user = User.create!(email: Faker::Internet.email)
+    color = Faker::Color.color_name
+    verb = Faker::Verb.simple_present
+    objective = ['towards', 'from', 'to', 'at', 'into', 'under', 'beside'].sample
+    word = Faker::Hipster.words(1, false, true).first
+
+    title = "#{color.capitalize} #{element.name} #{verb} #{objective} a #{word}"
+
+    dream = Dream.create!(
+      user: user,
+      title: title
+    )
+
+    dream.elements << element
+
+    puts title
+  end
 end
+
