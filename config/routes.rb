@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :dreams do
+  resources :dreams, only: [:show] do
     collection do
       get :random
     end
