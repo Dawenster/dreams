@@ -3,7 +3,7 @@
 # Table name: dreams
 #
 #  id         :uuid             not null, primary key
-#  title      :string
+#  title      :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :uuid             not null

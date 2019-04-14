@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_063354) do
+ActiveRecord::Schema.define(version: 2019_04_14_193058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -19,11 +19,27 @@ ActiveRecord::Schema.define(version: 2019_04_10_063354) do
   enable_extension "uuid-ossp"
 
   create_table "dreams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.uuid "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_dreams_on_user_id"
+  end
+
+  create_table "dreams_elements", force: :cascade do |t|
+    t.uuid "dream_id", null: false
+    t.uuid "element_id", null: false
+    t.index ["dream_id"], name: "index_dreams_elements_on_dream_id"
+    t.index ["element_id"], name: "index_dreams_elements_on_element_id"
+  end
+
+  create_table "elements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "dimension", null: false
+    t.text "commentary", null: false
+    t.string "image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -33,4 +49,6 @@ ActiveRecord::Schema.define(version: 2019_04_10_063354) do
   end
 
   add_foreign_key "dreams", "users"
+  add_foreign_key "dreams_elements", "dreams"
+  add_foreign_key "dreams_elements", "elements"
 end
