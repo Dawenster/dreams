@@ -17,14 +17,24 @@
     user = User.create!(email: Faker::Internet.email)
     color = Faker::Color.color_name
     verb = Faker::Verb.simple_present
-    objective = ['towards', 'from', 'to', 'at', 'into', 'under', 'beside'].sample
+    objective = [
+      'towards',
+      'from',
+      'to',
+      'at',
+      'into',
+      'under',
+      'beside'
+    ].sample
     word = Faker::Hipster.words(1, false, true).first
 
     title = "#{color.capitalize} #{element.name} #{verb} #{objective} a #{word}"
 
     dream = Dream.create!(
       user: user,
-      title: title
+      title: title,
+      description: Faker::Lorem.paragraph,
+      show_description: true
     )
 
     dream.elements << element

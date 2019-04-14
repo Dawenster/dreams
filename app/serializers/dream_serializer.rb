@@ -2,11 +2,13 @@
 #
 # Table name: dreams
 #
-#  id         :uuid             not null, primary key
-#  title      :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :uuid             not null
+#  id               :uuid             not null, primary key
+#  description      :text
+#  show_description :boolean          default(FALSE)
+#  title            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  user_id          :uuid             not null
 #
 # Indexes
 #
@@ -23,7 +25,7 @@ class DreamSerializer
   set_type :dream
 
   belongs_to :user
-  has_many :elements
+  has_many :elements, serializer: ElementSerializer
 
-  attribute :title
+  attributes :title, :description, :show_description
 end
