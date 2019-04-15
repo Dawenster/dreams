@@ -1,20 +1,18 @@
 class DreamsController < ApplicationController
   def show
     @dream = Dream.find(params[:id])
-    options = { include: [:elements] }
 
     render(
-      json: DreamSerializer.new(@dream, options).serialized_json,
+      json: serialized_dream_json(@dream),
       status: :ok
     )
   end
 
   def random
     @dream = Dream.all.sample
-    options = { include: [:elements] }
 
     render(
-      json: DreamSerializer.new(@dream, options).serialized_json,
+      json: serialized_dream_json(@dream),
       status: :ok
     )
   end
@@ -30,10 +28,9 @@ class DreamsController < ApplicationController
 
     if @dream.save && elements.any?
       @dream.elements << elements
-      options = { include: [:user, :elements] }
 
       render(
-        json: DreamSerializer.new(@dream, options).serialized_json,
+        json: serialized_dream_json(@dream),
         status: :ok
       )
     else
@@ -54,5 +51,10 @@ class DreamsController < ApplicationController
 
   def capitalize_first(string)
     string.slice(0, 1).capitalize + string.slice(1..-1)
+  end
+
+  def serialized_dream_json(dream)
+    options = { include: [:user, :elements] }
+    DreamSerializer.new(dream, options).serialized_json
   end
 end
