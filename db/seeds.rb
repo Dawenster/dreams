@@ -34,7 +34,7 @@
       user: user,
       title: title,
       description: Faker::Lorem.paragraph,
-      show_description: true
+      published: true
     )
 
     dream.elements << element

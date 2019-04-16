@@ -2,13 +2,13 @@
 #
 # Table name: dreams
 #
-#  id               :uuid             not null, primary key
-#  description      :text
-#  show_description :boolean          default(FALSE)
-#  title            :string           not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  user_id          :uuid             not null
+#  id          :uuid             not null, primary key
+#  description :text
+#  published   :boolean          default(FALSE)
+#  title       :string           not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :uuid             not null
 #
 # Indexes
 #
@@ -22,5 +22,5 @@
 Fabricator(:dream) do
   title Faker::Lorem.sentence
   description Faker::Lorem.paragraph
-  show_description true
+  published true
 end

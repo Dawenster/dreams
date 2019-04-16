@@ -20,7 +20,7 @@ RSpec.describe DreamsController, type: :controller do
 
       expect(attributes.fetch('title')).to eq(dream.title)
       expect(attributes.fetch('description')).to eq(dream.description)
-      expect(attributes.fetch('show_description')).to eq(dream.show_description)
+      expect(attributes.fetch('published')).to eq(dream.published)
 
       relationships = data.fetch('relationships')
       user_data = relationships.fetch('user').fetch('data')
@@ -43,7 +43,7 @@ RSpec.describe DreamsController, type: :controller do
 
       expect(attributes.fetch('title')).to eq(dream.title)
       expect(attributes.fetch('description')).to eq(dream.description)
-      expect(attributes.fetch('show_description')).to eq(dream.show_description)
+      expect(attributes.fetch('published')).to eq(dream.published)
 
       relationships = data.fetch('relationships')
       user_data = relationships.fetch('user').fetch('data')
@@ -78,7 +78,7 @@ RSpec.describe DreamsController, type: :controller do
 
       expect(attributes.fetch('title')).to eq('Foo')
       expect(attributes.fetch('description')).to eq('Bar')
-      expect(attributes.fetch('show_description')).to eq(false)
+      expect(attributes.fetch('published')).to eq(false)
 
       relationships = data.fetch('relationships')
       user_data = relationships.fetch('user').fetch('data')
@@ -139,7 +139,7 @@ RSpec.describe DreamsController, type: :controller do
 
       expect(attributes.fetch('title')).to eq('Foo')
       expect(attributes.fetch('description')).to eq('Bar')
-      expect(attributes.fetch('show_description')).to eq(false)
+      expect(attributes.fetch('published')).to eq(false)
 
       expect(users.first.fetch('id').present?).to eq(true)
       expect(users.first.fetch('attributes').fetch('email'))

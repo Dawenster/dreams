@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_14_202448) do
+ActiveRecord::Schema.define(version: 2019_04_16_055310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2019_04_14_202448) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
-    t.boolean "show_description", default: false
+    t.boolean "published", default: false
     t.index ["user_id"], name: "index_dreams_on_user_id"
   end
 
