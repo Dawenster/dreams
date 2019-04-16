@@ -155,9 +155,12 @@ RSpec.describe DreamsController, type: :controller do
         element_ids: element.id
       }
 
-      expect do
-        post(:create, params: params)
-      end.to raise_error(ActiveRecord::NotNullViolation)
+      res = post(:create, params: params)
+      body = JSON.parse(res.body)
+      error = body.fetch('error')
+
+      expect(error.include?('ActiveRecord::NotNullViolation')).to eq(true)
+      expect(res.code).to eq('500')
     end
 
     it 'fails with missing title' do
@@ -167,9 +170,12 @@ RSpec.describe DreamsController, type: :controller do
         element_ids: element.id
       }
 
-      expect do
-        post(:create, params: params)
-      end.to raise_error(ActiveRecord::NotNullViolation)
+      res = post(:create, params: params)
+      body = JSON.parse(res.body)
+      error = body.fetch('error')
+
+      expect(error.include?('ActiveRecord::NotNullViolation')).to eq(true)
+      expect(res.code).to eq('500')
     end
 
     it 'fails with missing element_ids' do
@@ -183,6 +189,7 @@ RSpec.describe DreamsController, type: :controller do
       body = JSON.parse(res.body)
 
       expect(body.fetch('message')).to eq('Missing at least one symbol ID')
+      expect(res.code).to eq('400')
     end
 
     it 'fails with non-existing element_ids' do
@@ -197,6 +204,7 @@ RSpec.describe DreamsController, type: :controller do
       body = JSON.parse(res.body)
 
       expect(body.fetch('message')).to eq('Missing at least one symbol ID')
+      expect(res.code).to eq('400')
     end
   end
 end

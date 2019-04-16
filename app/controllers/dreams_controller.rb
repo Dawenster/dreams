@@ -8,6 +8,8 @@ class DreamsController < ApplicationController
       json: serialized_dream_json(@dream),
       status: :ok
     )
+  rescue => e
+    log_and_return_error(e)
   end
 
   def random
@@ -17,6 +19,8 @@ class DreamsController < ApplicationController
       json: serialized_dream_json(@dream),
       status: :ok
     )
+  rescue => e
+    log_and_return_error(e)
   end
 
   def create
@@ -43,6 +47,8 @@ class DreamsController < ApplicationController
 
       render json: error, status: :bad_request
     end
+  rescue => e
+    log_and_return_error(e)
   end
 
   private
