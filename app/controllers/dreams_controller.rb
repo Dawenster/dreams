@@ -1,4 +1,6 @@
 class DreamsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create]
+
   def show
     @dream = Dream.find(params[:id])
 
