@@ -10,12 +10,11 @@ if (cors_domain = ENV['CORS_DOMAIN']).present?
   Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
       origins(*cors_domain.split(','))
+      resource(
+        '*',
+        headers: :any,
+        methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      )
     end
-
-    resource(
-      '*',
-      headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head]
-    )
   end
 end
