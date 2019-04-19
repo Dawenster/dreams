@@ -10,13 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_16_055310) do
+ActiveRecord::Schema.define(version: 2019_04_19_040308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "amount_in_cents", null: false
+    t.integer "fees_in_cents", null: false
+    t.string "stripe_charge_id", null: false
+    t.string "currency", null: false
+    t.uuid "user_id", null: false
+    t.uuid "payment_method_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["payment_method_id"], name: "index_charges_on_payment_method_id"
+    t.index ["user_id"], name: "index_charges_on_user_id"
+  end
 
   create_table "dreams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
@@ -44,13 +57,49 @@ ActiveRecord::Schema.define(version: 2019_04_16_055310) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "payment_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type", null: false
+    t.string "stripe_payment_method_id", null: false
+    t.string "brand", null: false
+    t.string "funding", null: false
+    t.string "last4", null: false
+    t.string "exp_month", null: false
+    t.string "exp_year", null: false
+    t.string "status", null: false
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_payment_methods_on_user_id"
+  end
+
+  create_table "purchases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "message"
+    t.uuid "recipient_id", null: false
+    t.uuid "buyer_id", null: false
+    t.uuid "dream_id", null: false
+    t.uuid "charge_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buyer_id"], name: "index_purchases_on_buyer_id"
+    t.index ["charge_id"], name: "index_purchases_on_charge_id"
+    t.index ["dream_id"], name: "index_purchases_on_dream_id"
+    t.index ["recipient_id"], name: "index_purchases_on_recipient_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "charges", "payment_methods"
+  add_foreign_key "charges", "users"
   add_foreign_key "dreams", "users"
   add_foreign_key "dreams_elements", "dreams"
   add_foreign_key "dreams_elements", "elements"
+  add_foreign_key "payment_methods", "users"
+  add_foreign_key "purchases", "charges"
+  add_foreign_key "purchases", "dreams"
+  add_foreign_key "purchases", "users", column: "buyer_id"
+  add_foreign_key "purchases", "users", column: "recipient_id"
 end

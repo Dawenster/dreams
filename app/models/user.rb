@@ -10,4 +10,7 @@
 
 class User < ActiveRecord::Base
   has_many :dreams
+  has_many :charges
+  has_many :payment_methods
+  has_many :purchases
 end

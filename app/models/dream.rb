@@ -22,4 +22,5 @@
 class Dream < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :elements
+  has_many :purchases
 end
