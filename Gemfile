@@ -30,6 +30,7 @@ group :test do
   gem 'fabrication', '~> 2.19'
   gem 'rails-controller-testing'
   gem 'rspec', '~> 3.7'
+  gem 'rspec-mocks'
   gem 'rspec-rails', '~> 3.7'
 end
 

@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   end
 
   resources :elements, only: [:index]
+
+  resources :purchases, only: [:create]
 end

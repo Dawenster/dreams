@@ -259,6 +259,7 @@ DEPENDENCIES
   rails-controller-testing
   rails_admin (~> 1.3)
   rspec (~> 3.7)
+  rspec-mocks
   rspec-rails (~> 3.7)
   spring
   spring-watcher-listen (~> 2.0.0)

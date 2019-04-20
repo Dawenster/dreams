@@ -24,7 +24,12 @@
 #  fk_rails_...  (user_id => users.id)
 #
 
-class PaymentMethod < ActiveRecord::Base
-  has_many :charges
-  belongs_to :user
+Fabricator(:payment_method) do
+  brand 'visa'
+  exp_month '01'
+  exp_year '2099'
+  funding 'credit'
+  last4 '4242'
+  status 'succeeded'
+  payment_method_type 'card'
 end

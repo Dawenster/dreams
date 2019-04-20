@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_19_040308) do
+ActiveRecord::Schema.define(version: 2019_04_20_063803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_04_19_040308) do
 
   create_table "charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "amount_in_cents", null: false
-    t.integer "fees_in_cents", null: false
+    t.integer "fee_in_cents", null: false
     t.string "stripe_charge_id", null: false
     t.string "currency", null: false
     t.uuid "user_id", null: false
@@ -32,11 +32,10 @@ ActiveRecord::Schema.define(version: 2019_04_19_040308) do
   end
 
   create_table "dreams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title", null: false
     t.uuid "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "description"
+    t.text "description", null: false
     t.boolean "published", default: false
     t.index ["user_id"], name: "index_dreams_on_user_id"
   end
@@ -58,7 +57,7 @@ ActiveRecord::Schema.define(version: 2019_04_19_040308) do
   end
 
   create_table "payment_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "type", null: false
+    t.string "payment_method_type", null: false
     t.string "stripe_payment_method_id", null: false
     t.string "brand", null: false
     t.string "funding", null: false

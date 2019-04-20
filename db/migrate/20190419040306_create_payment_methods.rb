@@ -1,7 +1,7 @@
 class CreatePaymentMethods < ActiveRecord::Migration[5.2]
   def change
     create_table :payment_methods, id: :uuid do |t|
-      t.string :type, null: false
+      t.string :payment_method_type, null: false
       t.string :stripe_payment_method_id, null: false
       t.string :brand, null: false
       t.string :funding, null: false

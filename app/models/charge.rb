@@ -5,7 +5,7 @@
 #  id                :uuid             not null, primary key
 #  amount_in_cents   :integer          not null
 #  currency          :string           not null
-#  fees_in_cents     :integer          not null
+#  fee_in_cents      :integer          not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  payment_method_id :uuid             not null
@@ -26,4 +26,5 @@
 class Charge < ActiveRecord::Base
   belongs_to :user
   belongs_to :payment_method
+  has_one :purchase
 end

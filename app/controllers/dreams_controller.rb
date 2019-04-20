@@ -24,6 +24,8 @@ class DreamsController < ApplicationController
   end
 
   def create
+    required_parameters([:email, :element_ids, :description])
+
     @dream = Dream.new(dream_params)
     email = params[:email].try(:strip).try(:downcase)
     user = User.find_or_create_by!(email: email)
@@ -54,7 +56,7 @@ class DreamsController < ApplicationController
   private
 
   def dream_params
-    params.permit(:title, :description)
+    params.permit(:description)
   end
 
   def capitalize_first(string)

@@ -28,18 +28,17 @@
     ].sample
     word = Faker::Hipster.words(1, false, true).first
 
-    title = "#{color.capitalize} #{element.name} #{verb} #{objective} a #{word}"
+    description = "#{color.capitalize} #{element.name} #{verb} #{objective} a #{word}"
 
     dream = Dream.create!(
       user: user,
-      title: title,
-      description: Faker::Lorem.paragraph,
+      description: description,
       published: true
     )
 
     dream.elements << element
 
-    puts title
+    puts description
   end
 end
 

@@ -3,9 +3,8 @@
 # Table name: dreams
 #
 #  id          :uuid             not null, primary key
-#  description :text
+#  description :text             not null
 #  published   :boolean          default(FALSE)
-#  title       :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  user_id     :uuid             not null
@@ -27,5 +26,5 @@ class DreamSerializer
   belongs_to :user
   has_many :elements, serializer: ElementSerializer
 
-  attributes :title, :description, :published
+  attributes :description, :published
 end

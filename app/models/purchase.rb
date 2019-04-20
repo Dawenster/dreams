@@ -30,5 +30,5 @@ class Purchase < ActiveRecord::Base
   belongs_to :recipient, class_name: 'User', foreign_key: 'recipient_id'
   belongs_to :buyer, class_name: 'User', foreign_key: 'buyer_id'
   belongs_to :dream
-  has_one :charge
+  belongs_to :charge
 end
