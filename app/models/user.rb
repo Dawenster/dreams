@@ -12,5 +12,8 @@ class User < ActiveRecord::Base
   has_many :dreams
   has_many :charges
   has_many :payment_methods
-  has_many :purchases
+  has_many :purchases, foreign_key: 'buyer_id', class_name: 'Purchase'
+  has_many :purchases_received,
+           foreign_key: 'recipient_id',
+           class_name: 'Purchase'
 end
