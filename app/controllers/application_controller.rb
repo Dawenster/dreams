@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
       puts '*' * 20
     end
 
-    custom_errors = [MissingParameterError, NegativeMoneyAmountError]
+    custom_errors = [MissingParameterError, InvalidAmountError]
     error_message = custom_errors.include?(e.class) ? e.message : e.class.name
 
     status = e.try(:code) ||

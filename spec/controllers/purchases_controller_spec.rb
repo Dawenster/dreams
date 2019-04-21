@@ -14,8 +14,8 @@ RSpec.describe PurchasesController, type: :controller do
         recipient_email: 'recipient@foo.com',
         buyer_email: 'buyer@foo.com',
         dream_id: dream.id,
-        amount_in_cents: 500,
-        fee_in_cents: 100,
+        amount_in_cents: '500',
+        fee_in_cents: '100',
         stripe_token: 'stripe_token',
         message: 'foo foo foo'
       }
@@ -36,6 +36,7 @@ RSpec.describe PurchasesController, type: :controller do
       expect(purchase.buyer.email).to eq('buyer@foo.com')
       expect(purchase.dream.id).to eq(dream.id)
       expect(purchase.message).to eq('foo foo foo')
+      expect(purchase.charge.total_charged_in_cents).to eq(600)
     end
 
     it 'succeeds without creating new users' do
@@ -46,8 +47,8 @@ RSpec.describe PurchasesController, type: :controller do
         recipient_email: 'recipient@foo.com',
         buyer_email: 'buyer@foo.com',
         dream_id: dream.id,
-        amount_in_cents: 500,
-        fee_in_cents: 100,
+        amount_in_cents: '500',
+        fee_in_cents: '100',
         stripe_token: 'stripe_token',
         message: 'foo foo foo'
       }
@@ -80,8 +81,29 @@ RSpec.describe PurchasesController, type: :controller do
         recipient_email: 'recipient@foo.com',
         buyer_email: 'buyer@foo.com',
         dream_id: dream.id,
-        amount_in_cents: -500,
-        fee_in_cents: 100,
+        amount_in_cents: '-500',
+        fee_in_cents: '100',
+        stripe_token: 'stripe_token',
+        message: 'foo foo foo'
+      }
+
+      res = post(:create, params: params)
+      body = JSON.parse(res.body)
+      error = body.fetch('error')
+
+      error_message = 'amount_in_cents is not a positive integer'
+
+      expect(error.include?(error_message)).to eq(true)
+      expect(res.code).to eq('400')
+    end
+
+    it 'fails with zero as amount_in_cents' do
+      params = {
+        recipient_email: 'recipient@foo.com',
+        buyer_email: 'buyer@foo.com',
+        dream_id: dream.id,
+        amount_in_cents: '0',
+        fee_in_cents: '100',
         stripe_token: 'stripe_token',
         message: 'foo foo foo'
       }
@@ -101,8 +123,29 @@ RSpec.describe PurchasesController, type: :controller do
         recipient_email: 'recipient@foo.com',
         buyer_email: 'buyer@foo.com',
         dream_id: dream.id,
-        amount_in_cents: 500,
-        fee_in_cents: -100,
+        amount_in_cents: '500',
+        fee_in_cents: '-100',
+        stripe_token: 'stripe_token',
+        message: 'foo foo foo'
+      }
+
+      res = post(:create, params: params)
+      body = JSON.parse(res.body)
+      error = body.fetch('error')
+
+      error_message = 'fee_in_cents is not a positive integer'
+
+      expect(error.include?(error_message)).to eq(true)
+      expect(res.code).to eq('400')
+    end
+
+    it 'fails with zero as fee_in_cents' do
+      params = {
+        recipient_email: 'recipient@foo.com',
+        buyer_email: 'buyer@foo.com',
+        dream_id: dream.id,
+        amount_in_cents: '500',
+        fee_in_cents: '0',
         stripe_token: 'stripe_token',
         message: 'foo foo foo'
       }
