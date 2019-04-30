@@ -48,10 +48,19 @@ class PurchasesController < ApplicationController
       buyer
     )
 
-    charge = sc.run!
+    ActiveRecord::Base.transaction do
+      charge = sc.run!
 
-    @purchase.charge = charge
-    @purchase.save!
+      @purchase.charge = charge
+      @purchase.save!
+    end
+
+    POSTMARK.deliver_with_template(
+      from: SEND_DREAMS_EMAIL_SENDER,
+      to: recipient.email,
+      template_id: POSTMARK_DREAM_PURCHASED_TEMPLATE_ID,
+      template_model: template_model(purchase)
+    )
 
     head :ok
   rescue => e
@@ -67,5 +76,14 @@ class PurchasesController < ApplicationController
   def find_or_create_user_by_email(email)
     email = email.try(:strip).try(:downcase)
     User.find_or_create_by!(email: email)
+  end
+
+  def template_model(purchase)
+    {
+      recipient_email: purchase.recipient.email,
+      buyer_email: purchase.buyer.email,
+      dream_description: purchase.dream.description,
+      message: purchase.message
+    }
   end
 end

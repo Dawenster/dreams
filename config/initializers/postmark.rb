@@ -1,0 +1,5 @@
+POSTMARK = Postmark::ApiClient.new(ENV['POSTMARK_API_TOKEN'])
+
+POSTMARK_DREAM_PURCHASED_TEMPLATE_ID = 11287143
+
+SEND_DREAMS_EMAIL_SENDER = 'Dream Team <hello@senddreams.com>'.freeze
