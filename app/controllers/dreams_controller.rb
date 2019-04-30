@@ -2,7 +2,7 @@ class DreamsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def show
-    @dream = Dream.find(params[:id])
+    @dream = Dream.published.find(params[:id])
 
     render(
       json: serialized_dream_json(@dream),
@@ -13,7 +13,7 @@ class DreamsController < ApplicationController
   end
 
   def random
-    @dream = Dream.all.sample
+    @dream = Dream.published.sample
 
     render(
       json: serialized_dream_json(@dream),
