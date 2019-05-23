@@ -24,4 +24,20 @@ class Dream < ActiveRecord::Base
   has_many :purchases
 
   scope :published, -> { where(published: true) }
+
+  def redacted_description
+    description.split(' ').each_with_index.map do |word, i|
+      redactable?(word) || i % 5 === 4 ? redact!(word) : word
+    end.join(' ')
+  end
+
+  private
+
+  def redactable?(string)
+    string.length >= 6
+  end
+
+  def redact!(string)
+    '*' * string.length
+  end
 end
