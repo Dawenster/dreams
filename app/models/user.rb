@@ -19,4 +19,8 @@ class User < ActiveRecord::Base
   has_many :purchases_received,
            foreign_key: 'recipient_id',
            class_name: 'Purchase'
+
+  def name
+    self.read_attribute(:name) || email
+  end
 end
