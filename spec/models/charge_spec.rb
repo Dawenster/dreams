@@ -26,7 +26,7 @@
 require 'rails_helper'
 
 RSpec.describe Charge, type: :model do
-  describe '#total_charged_in_cents' do
+  describe '#amount_to_donate_in_cents' do
     let(:user) { Fabricate(:user) }
     let(:payment_method) {
       Fabricate(
@@ -47,7 +47,7 @@ RSpec.describe Charge, type: :model do
     }
 
     it 'returns sum of amount and fee' do
-      expect(charge.total_charged_in_cents).to eq(600)
+      expect(charge.amount_to_donate_in_cents).to eq(400)
     end
   end
 end

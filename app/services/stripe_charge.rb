@@ -2,7 +2,6 @@ class StripeCharge
   def initialize(amount_in_cents, fee_in_cents, stripe_token, dream, buyer)
     @amount_in_cents = amount_in_cents
     @fee_in_cents = fee_in_cents
-    @total_in_cents = @amount_in_cents + @fee_in_cents
     @stripe_token = stripe_token # obtained with Stripe.js
     @currency = 'usd'
     @dream = dream
@@ -11,7 +10,7 @@ class StripeCharge
 
   def run!
     stripe_charge = Stripe::Charge.create({
-      amount: @total_in_cents,
+      amount: @amount_in_cents,
       currency: @currency,
       source: @stripe_token,
       description: "For dream: #{@dream.id}"

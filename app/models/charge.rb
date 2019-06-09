@@ -28,7 +28,7 @@ class Charge < ActiveRecord::Base
   belongs_to :payment_method
   has_one :purchase
 
-  def total_charged_in_cents
-    amount_in_cents + fee_in_cents
+  def amount_to_donate_in_cents
+    amount_in_cents - fee_in_cents
   end
 end

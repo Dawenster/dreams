@@ -88,7 +88,7 @@ RSpec.describe StripeCharge do
     it 'hits Stripe and creates correct records' do
       allow(Stripe::Charge).to receive(:create).and_return(mock_stripe_charge)
       expect(Stripe::Charge).to receive(:create).with({
-        amount: amount_in_cents + fee_in_cents,
+        amount: amount_in_cents,
         currency: 'usd',
         source: 'stripe_token',
         description: "For dream: #{dream.id}"

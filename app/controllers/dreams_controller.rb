@@ -2,7 +2,7 @@ class DreamsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def show
-    @dream = Dream.published.find(params[:id])
+    @dream = Dream.find(params[:id])
 
     render(
       json: serialized_dream_json(@dream),
@@ -33,7 +33,6 @@ class DreamsController < ApplicationController
     elements = Element.where(id: element_ids)
 
     @dream.user = user
-    @dream.published = true # Might want to change this
 
     if @dream.save && elements.any?
       @dream.elements << elements

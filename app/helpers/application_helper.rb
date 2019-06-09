@@ -4,6 +4,6 @@ module ApplicationHelper
   end
 
   def dream_url(dream)
-    "#{frontend_url}/dreams/#{dream.id}"
+    "#{frontend_url}?dream=#{dream.id}"
   end
 end
