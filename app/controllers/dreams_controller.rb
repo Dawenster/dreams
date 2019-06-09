@@ -33,6 +33,7 @@ class DreamsController < ApplicationController
     elements = Element.where(id: element_ids)
 
     @dream.user = user
+    @dream.published = true # Might want to change this
 
     if @dream.save && elements.any?
       @dream.elements << elements
