@@ -37,6 +37,8 @@ class DreamsController < ApplicationController
     if @dream.save && elements.any?
       @dream.elements << elements
 
+      send_donor_email unless Rails.env.test?
+
       render(
         json: serialized_dream_json(@dream),
         status: :ok
@@ -66,5 +68,24 @@ class DreamsController < ApplicationController
   def serialized_dream_json(dream)
     options = { include: [:user, :elements] }
     DreamSerializer.new(dream, options).serialized_json
+  end
+
+  def send_donor_email
+    POSTMARK.deliver_with_template(
+      from: SEND_DREAMS_EMAIL_SENDER,
+      to: @dream.user.email,
+      template_id: POSTMARK_DREAM_CREATED_DONOR_TEMPLATE_ID,
+      template_model: donor_template_model
+    )
+  end
+
+  def donor_template_model
+    donor = @dream.user
+
+    {
+      donor_name: donor.name || donor.email,
+      dream_description: @dream.description,
+      dream_url: dream_url(@dream)
+    }
   end
 end

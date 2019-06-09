@@ -135,8 +135,6 @@ RSpec.describe DreamsController, type: :controller do
       expect(attributes.fetch('published')).to eq(false)
 
       expect(users.first.fetch('id').present?).to eq(true)
-      expect(users.first.fetch('attributes').fetch('email'))
-        .to eq('foo@bar.com')
 
       expect(elements.first.fetch('id')).to eq(element.id)
     end
