@@ -124,13 +124,20 @@ class PurchasesController < ApplicationController
 
   def recipient_template_model
     recipient = @purchase.recipient
+    element = @purchase.dream.elements.first
 
     {
       recipient_name: recipient.name || recipient.email,
       buyer_email: @purchase.buyer.email,
       dream_description: @purchase.dream.description,
       message: @purchase.message,
-      purchase_date: @purchase.created_at
+      purchase_date: @purchase.created_at,
+      element: {
+        name: element.name,
+        dimension: element.dimension,
+        commentary: element.commentary,
+        image_url: element.image_url
+      }
     }
   end
 
