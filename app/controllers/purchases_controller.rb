@@ -129,13 +129,15 @@ class PurchasesController < ApplicationController
     {
       recipient_name: recipient.name || recipient.email,
       buyer_email: @purchase.buyer.email,
-      dream_description: @purchase.dream.description,
-      message: @purchase.message,
+      dream_description: convert_newlines_to_breaks(
+        @purchase.dream.description
+      ),
+      message: convert_newlines_to_breaks(@purchase.message),
       purchase_date: @purchase.created_at,
       element: {
         name: element.name,
         dimension: element.dimension,
-        commentary: element.commentary,
+        commentary: convert_newlines_to_breaks(element.commentary),
         image_url: element.image_url
       }
     }
@@ -143,5 +145,9 @@ class PurchasesController < ApplicationController
 
   def cents_to_dollars(cents)
     '%.2f' % (cents.to_i / 100.0)
+  end
+
+  def convert_newlines_to_breaks(str)
+    ActionController::Base.helpers.sanitize(str.gsub(/\R/, '<br />'))
   end
 end
