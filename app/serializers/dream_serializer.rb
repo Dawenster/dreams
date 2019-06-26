@@ -26,5 +26,5 @@ class DreamSerializer
   belongs_to :user
   has_many :elements, serializer: ElementSerializer
 
-  attributes :description, :redacted_description, :published
+  attributes :redacted_description, :published
 end
