@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   resources :elements, only: [:index]
 
   resources :purchases, only: [:create]
+
+  root to: 'pages#landing'
 end
