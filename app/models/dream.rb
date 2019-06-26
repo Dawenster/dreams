@@ -26,9 +26,11 @@ class Dream < ActiveRecord::Base
   scope :published, -> { where(published: true) }
 
   def redacted_description
-    description.split(' ').each_with_index.map do |word, i|
-      redactable?(word) || i % 5 === 4 ? redact!(word) : word
-    end.join(' ')
+    description.lines.map do |line|
+      line.split(' ').each_with_index.map do |word, i|
+        redactable?(word) || i % 5 === 4 ? redact!(word) : word
+      end.join(' ')
+    end.join("\r\n")
   end
 
   private
