@@ -12,7 +12,9 @@ RSpec.describe PurchasesController, type: :controller do
     it 'succeeds with all required params' do
       params = {
         recipient_email: 'recipient@foo.com',
+        recipient_name: 'recipient',
         buyer_email: 'buyer@foo.com',
+        buyer_name: 'buyer',
         dream_id: dream.id,
         amount_in_cents: '500',
         stripe_token: 'stripe_token',
@@ -44,7 +46,9 @@ RSpec.describe PurchasesController, type: :controller do
 
       params = {
         recipient_email: 'recipient@foo.com',
+        recipient_name: 'recipient',
         buyer_email: 'buyer@foo.com',
+        buyer_name: 'buyer',
         dream_id: dream.id,
         amount_in_cents: '500',
         stripe_token: 'stripe_token',
@@ -66,9 +70,9 @@ RSpec.describe PurchasesController, type: :controller do
       body = JSON.parse(res.body)
       error = body.fetch('error')
 
-      error_message = 'Need to pass in recipient_email, buyer_email, ' \
-                      'dream_id, amount_in_cents, and ' \
-                      'stripe_token as parameters'
+      error_message = 'Need to pass in recipient_email, recipient_name, ' \
+                      'buyer_email, buyer_name, dream_id, amount_in_cents, ' \
+                      'and stripe_token as parameters'
 
       expect(error.include?(error_message)).to eq(true)
       expect(res.code).to eq('400')
@@ -77,7 +81,9 @@ RSpec.describe PurchasesController, type: :controller do
     it 'fails with negative amount_in_cents' do
       params = {
         recipient_email: 'recipient@foo.com',
+        recipient_name: 'recipient',
         buyer_email: 'buyer@foo.com',
+        buyer_name: 'buyer',
         dream_id: dream.id,
         amount_in_cents: '-500',
         stripe_token: 'stripe_token',
@@ -97,7 +103,9 @@ RSpec.describe PurchasesController, type: :controller do
     it 'fails with amount_in_cents less than 500' do
       params = {
         recipient_email: 'recipient@foo.com',
+        recipient_name: 'recipient',
         buyer_email: 'buyer@foo.com',
+        buyer_name: 'buyer',
         dream_id: dream.id,
         amount_in_cents: '499',
         stripe_token: 'stripe_token',

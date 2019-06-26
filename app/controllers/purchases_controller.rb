@@ -18,7 +18,9 @@ class PurchasesController < ApplicationController
   def create
     required_parameters([
       :recipient_email,
+      :recipient_name,
       :buyer_email,
+      :buyer_name,
       :dream_id,
       :amount_in_cents,
       :stripe_token
@@ -30,8 +32,17 @@ class PurchasesController < ApplicationController
     raise InvalidAmountError.new(:amount_in_cents) if amount_in_cents < 500
 
     fee_in_cents = calculate_fees(amount_in_cents)
-    recipient = find_or_create_user_by_email(params[:recipient_email], params[:recipient_name])
-    buyer = find_or_create_user_by_email(params[:buyer_email])
+
+    recipient = find_or_create_user_by_email(
+      params[:recipient_email],
+      params[:recipient_name]
+    )
+
+    buyer = find_or_create_user_by_email(
+      params[:buyer_email],
+      params[:buyer_name]
+    )
+
     dream = Dream.find(params[:dream_id])
 
     @purchase = Purchase.new(purchase_params)
