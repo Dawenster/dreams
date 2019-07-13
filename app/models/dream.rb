@@ -21,7 +21,7 @@
 class Dream < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :elements
-  has_many :purchases
+  has_many :purchases, dependent: :destroy
 
   scope :published, -> { where(published: true) }
 
