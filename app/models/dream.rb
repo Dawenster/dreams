@@ -36,7 +36,7 @@ class Dream < ActiveRecord::Base
   private
 
   def redactable?(string)
-    string.length >= 6
+    string.length >= 8
   end
 
   def redact!(string)
