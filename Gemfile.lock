@@ -123,7 +123,7 @@ GEM
     multipart-post (2.0.0)
     nested_form (0.3.2)
     nio4r (2.3.1)
-    nokogiri (1.10.2)
+    nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     pg (1.1.4)
     postmark (1.15.0)
