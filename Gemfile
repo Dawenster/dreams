@@ -12,7 +12,7 @@ gem 'postmark'
 gem 'puma', '~> 3.11'
 gem 'rack-cors', '~> 1.0'
 gem 'rails', '~> 5.2.0'
-gem 'rails_admin', '~> 1.3'
+gem 'rails_admin', '~> 1.4'
 gem 'stripe'
 
 group :development, :test do
